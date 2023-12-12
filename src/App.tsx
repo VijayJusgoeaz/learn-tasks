@@ -1,46 +1,71 @@
 import React, { useEffect, useState } from "react";
 
 const App = () => {
-  const [state1, setState1] = useState(0);
-  const [state2, setState2] = useState(0);
-  const [state3, setState3] = useState(0);
-  let sum = state3 + state2;
-  // todo: use memo here
-
+  const [age, setAge] = useState(0);
+  const [user, setUser] = useState({ name: "VJ", age: age, gender: "male" });
+  const [users, setUsers] = useState([user]);
+  const [state4, setState4] = useState(users);
+  const [state5, setState5] = useState(0);
+  // todo: merge map and filter together ✅
+  // todo: combine 2 useEffect into 1 ✅
   useEffect(() => {
-    sum = state3 + state2;
-    setState1(sum);
-    console.log("Sum is:", sum);
-  }, [state3, state2]);
+    let sum_of_ages = 0;
+    let filter = users
+      .filter((user: any) => user.age < 10)
+      .map((user) => {
+        return { ...user, filter: true };
+      });
 
-  function handleIncrement(e: any) {
-    // todo: study this concept
-    e.preventDefault();
-    setState3(state3 + 1);
-  }
+    let filter1 = users.map((user) => {
+      if (user.age < 10) {
+        return { ...user, filter: true };
+      }
+    }).filter((user)=>user);
+    
 
-  function handleChange(e: any) {
-    //  todo: change to finish or something onchange
-    console.log("e", e);
-    if (e != "") {
-      console.log(parseInt(e));
-      setState2(parseInt(e));
-    } else {
-      console.log("empty string");
-    }
+    console.log("users_under_10", filter1);
+    setState4(filter);
+    console.log("Under 10:", filter);
+    // ---------------------------
+    // todo: remove map
+    sum_of_ages = filter.reduce((total, user) => {
+      return total + user.age;
+    }, 0);
+    setState5(sum_of_ages);
+    console.log("sum_of_ages", sum_of_ages);
+  }, [users]);
+
+  function handleAgeIncrement() {
+    let temp = age + 1;
+    setAge(temp);
+    console.log("age created now: ", temp);
+    let userTemp = { ...user, age: temp };
+    setUser(userTemp);
+    console.log(userTemp);
+
+    let usersTemp = [...users, userTemp];
+    setUsers(usersTemp);
+    console.log(usersTemp);
   }
 
   return (
     <div>
-      {state1}
-      <form>
+      <div>
         <div>
-          <input type="number" onChange={(e) => handleChange(e.target.value)} />
+          {state4.map((user) => {
+            return (
+              <>
+                <p>
+                  Name:<span>{user.name}</span>
+                  Age:<span>{user.age}</span>
+                  Gender:<span>{user.gender}</span>
+                </p>
+              </>
+            );
+          })}
         </div>
-        <button onClick={(e) => handleIncrement(e)}>
-          Increment state variable 3
-        </button>
-      </form>
+        <button onClick={handleAgeIncrement}>Add new age</button>
+      </div>
     </div>
   );
 };
