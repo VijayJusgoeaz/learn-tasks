@@ -1,43 +1,27 @@
-import React, { useMemo, useState } from "react";
-import List from "./Comp/List";
+import React, { useCallback, useMemo, useState } from "react";
+import DoubleItem from "./Comp/Double";
 
-const App = () => {
-  const [counterOne, setcounterOne] = useState(0);
-  const [counterTwo, setcounterTwo] = useState(0);
+function App() {
+  const [count, setcount] = useState(1);
+  const [doubleCount, setDoubleCount] = useState(count);
 
-  const incrementCounterOne = () => {
-    setcounterOne(counterOne + 2);
-  };
-  const incrementCounterTwo = () => {
-    setcounterTwo(counterTwo + 1);
+  const handleIncrement = () => {
+    setcount(count + 1);
+    console.log(count);
   };
 
-  const isEven = useMemo(() => {
-    console.log("Im running....");
-    let i = 0;
-    while (i < 2000000000) {
-      i++;
-    }
-    return counterOne % 2 == 0;
-  }, [counterOne]);
-
-  // const render = useMemo(() => {
-  //   console.log('Render called')
-  //   return isEven;
-  // }, [isEven]);
+  const handleDouble = useCallback(() => {
+    setDoubleCount(doubleCount * 2);
+  }, [doubleCount]);
 
   return (
     <div>
-      <button onClick={incrementCounterOne}>Counter One: {counterOne}</button>
-      {/* prevent re-rendering using useMemo */}
-      {/* <span>{render.toString()}</span>; */} 
-
-      {/* prevent re-rendering using memo */}
-      <List render={isEven}></List>
-      <br></br>
-      <button onClick={incrementCounterTwo}>Counter Two: {counterTwo}</button>
+      <div>{count}</div>
+      <div>{doubleCount}</div>
+      <button onClick={handleIncrement}>+</button>
+      <DoubleItem handleDouble={handleDouble} />
     </div>
   );
-};
+}
 
 export default App;
