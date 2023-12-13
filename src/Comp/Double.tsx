@@ -1,15 +1,18 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useContext, useEffect } from "react";
+import MyContext from "./Context";
 
-const DoubleItem = ({ handleDouble }: { handleDouble: () => void }) => {
+const DoubleItem = () => {
+  const contextValue = useContext(MyContext);
   useEffect(() => {
     console.log("Rendered");
   });
 
   return (
     <div>
-      <button onClick={handleDouble}>Double</button>
+      Context Value: {contextValue}
+      <button>Double</button>
     </div>
   );
 };
 
-export default memo(DoubleItem);
+export default DoubleItem;

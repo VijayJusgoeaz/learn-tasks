@@ -1,27 +1,18 @@
-import React, { useCallback, useMemo, useState } from "react";
+import { createContext } from "react";
+import Panel from "./Comp/Panel";
 import DoubleItem from "./Comp/Double";
+import MyContext from "./Comp/Context";
 
-function App() {
-  const [count, setcount] = useState(1);
-  const [doubleCount, setDoubleCount] = useState(count);
-
-  const handleIncrement = () => {
-    setcount(count + 1);
-    console.log(count);
-  };
-
-  const handleDouble = useCallback(() => {
-    setDoubleCount(doubleCount * 2);
-  }, [doubleCount]);
-
+const App = () => {
   return (
-    <div>
-      <div>{count}</div>
-      <div>{doubleCount}</div>
-      <button onClick={handleIncrement}>+</button>
-      <DoubleItem handleDouble={handleDouble} />
-    </div>
+    <MyContext.Provider value={2}>
+      <DoubleItem />
+      <Panel title={""}>
+        <button>+</button>
+        <button>-</button>
+      </Panel>
+    </MyContext.Provider>
   );
-}
+};
 
 export default App;
