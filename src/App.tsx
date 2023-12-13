@@ -1,18 +1,16 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import About from "./Comp/About";
 
 const App = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <Routes>
+        <Route path="/about/:username/:job" element={<About />} />
         {/* <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} /> */}
-        <Route path="/about/:username/:job" element={<About />} />
+        <Route path="/register" element={<Register />} /> 
+        <Route path="/*" element={<Errorpage />} />*/}
       </Routes>
-      {/* <button onClick={() => navigate(1)}>Forward</button>
-      <button onClick={() => navigate(-1)}>Backward</button> */}
     </div>
   );
 };
