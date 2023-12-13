@@ -1,17 +1,20 @@
-import { createContext } from "react";
-import Panel from "./Comp/Panel";
-import DoubleItem from "./Comp/Double";
-import MyContext from "./Comp/Context";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Home from "./Comp/Home";
+import Login from "./Comp/Login";
+import Register from "./Comp/Register";
 
 const App = () => {
+  const navigate=useNavigate();
   return (
-    <MyContext.Provider value={2}>
-      <DoubleItem />
-      <Panel title={""}>
-        <button>+</button>
-        <button>-</button>
-      </Panel>
-    </MyContext.Provider>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+      <button onClick={()=>navigate(1)}>Forward</button>
+      <button onClick={()=>navigate(-1)}>Backward</button>
+    </div>
   );
 };
 
