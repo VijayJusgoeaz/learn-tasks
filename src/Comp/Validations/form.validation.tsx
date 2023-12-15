@@ -1,12 +1,8 @@
 import * as yup from "yup";
 
 const formSchema = yup.object().shape({
-  username: yup.string().required("username is required"),
-  password: yup
-    .number()
-    .positive("Password must be greater than zero")
-    .required("Password is required")
-    .typeError("Password must be a number"),
+  email: yup.string().email("Invalid Email").required("Email is required"),
+  first_name: yup.string().required("First name is required"),
 });
 
 const YupRules = [
@@ -18,4 +14,5 @@ const YupRules = [
     },
   },
 ];
+
 export default YupRules;
